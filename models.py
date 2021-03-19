@@ -13,16 +13,16 @@ class Employee:
 
     def cheak_salary(self):
         def zp(zp_day):
-            first_data = datetime.date.today() - datetime.timedelta(days=datetime.date.today().day)
             data_now = datetime.date.today()
             delta = datetime.timedelta(1)
+            first_day = data_now.replace(day=1)
 
             days = 0
-            while first_data != data_now:
-                if data_now.isoweekday() not in (6, 7):
+            while first_day != data_now:
+                if first_day.isoweekday() not in (6, 7):
                     days += 1
-                data_now -= delta
-            return zp_day * days
+                first_day += delta
+            return zp_day * days + zp_day
 
         zp_now = zp(self.zp_day)
         zp_month = Employee.zp_month_calc(self)
