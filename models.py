@@ -111,7 +111,8 @@ class Programmer(Employee):
         name = self.name + other.name
         zp_day = self.zp_day + other.zp_day
         day = math.ceil((self.days + other.days) / 2)
-        return Programmer(name, zp_day, day, tech_stack)
+        email = self.email + other.email
+        return Programmer(name, zp_day, day, email, tech_stack)
 
 
 class Candidate:
