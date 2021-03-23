@@ -1,4 +1,5 @@
 import traceback
+from  datetime import datetime
 from models import Employee, Recruiter, Programmer, Candidate, Vacancy
 
 
@@ -59,8 +60,11 @@ def main():
 
 
     except Exception as e:
+
         with open('logs.txt', 'a+') as log:
-            log.write(traceback.format_exc() + '------------------' + '\n')
+            mytime=(datetime.now().ctime())
+            log.write(mytime + '\n'  )
+            log.write(traceback.format_exc() + '------------------' + '\n' )
 
 
 if __name__ == '__main__':
