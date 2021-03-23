@@ -2,11 +2,28 @@ import datetime
 import math
 
 
+class UnableToWorkException(Exception):
+    pass
+
+
 class Employee:
-    def __init__(self, name, zp_day, days):
+
+    def __init__(self, name, zp_day, days, email):
         self.name = name
         self.zp_day = zp_day
         self.days = days
+        self.email = email
+        self.validation()
+        self.saveEmail()
+
+    def saveEmail(self):
+        with open('adress.txt', 'a+') as adr:
+            adr.write(self.email + '\n')
+
+    def validation(self):
+        with open('adress.txt') as adr:
+            if self.email in adr.read():
+                raise ValueError('Email Существует')
 
     def work(self):
         return "I come to the office"
@@ -53,7 +70,7 @@ class Employee:
 class Recruiter(Employee):
 
     def work(self):
-        return 'I come to the office and start to hiring.'
+        return super().work() and 'and start to hiring.'
 
     def __str__(self):
         return f"{self.__class__.__name__} : {self.name}"
@@ -61,8 +78,8 @@ class Recruiter(Employee):
 
 class Programmer(Employee):
 
-    def __init__(self, name, zp_day, days, tech_stack):
-        super().__init__(name, zp_day, days)
+    def __init__(self, name, zp_day, days, email, tech_stack):
+        super().__init__(name, zp_day, days, email)
         self.tech_stack = tech_stack
 
     def work(self):
@@ -98,7 +115,7 @@ class Programmer(Employee):
 
 
 class Candidate:
-    def __init__(self, full_name, email, technologies, main_skill, main_skill_grade):
+    def __init__(self, full_name, technologies, email, main_skill, main_skill_grade):
         self.full_name = full_name
         self.email = email
         self.technologies = technologies
@@ -110,6 +127,9 @@ class Candidate:
             адресс: {self.email} 
             на должность: {self.technologies} , main_skill: {self.main_skill} на уровне {self.main_skill_grade}       
         """
+
+    def work(self):
+        raise UnableToWorkException("I'm not hired yet,lol")
 
 
 class Vacancy:
